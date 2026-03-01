@@ -30,8 +30,8 @@ CAMERA_MAPPING = {
 class GeoFrontierNav(GoalNavigator):
     default_config = {
         # Model Params
-        "frontier_ckpt": "frontier_ckpt.ckpt",
-        "traversability_ckpt": "traversability_ckpt.ckpt",
+        "frontier_ckpt": "frontier_head.ckpt",
+        "traversability_ckpt": "trav_head.ckpt",
         "model_version": "c-radio_v3-b",
         "adaptor_version": None,
         "use_naclip": True,

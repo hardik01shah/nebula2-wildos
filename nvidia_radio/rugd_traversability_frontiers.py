@@ -92,8 +92,8 @@ class RADIOFrontierTraversability:
                 break
 
 if __name__ == "__main__":
-    frontier_ckpt = "ckpts/frontier_ckpt.ckpt"
-    traversability_ckpt = "ckpts/traversability_ckpt.ckpt"
+    frontier_ckpt = "ckpts/frontier_head.ckpt"
+    traversability_ckpt = "ckpts/trav_head.ckpt"
 
     rugd_dataset = RUGDTraversabilityDataset("/home/scarecrow/data/RUGD")
     nebula_dataset = NebulaDataset("/home/scarecrow/data/nebula")

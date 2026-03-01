@@ -304,8 +304,8 @@ class RADIODownstreamInference:
 
 if __name__ == "__main__":
     # Example usage
-    frontier_ckpt = "ckpts/frontier_ckpt.ckpt"
-    traversability_ckpt = "ckpts/traversability_ckpt.ckpt"
+    frontier_ckpt = "ckpts/frontier_head.ckpt"
+    traversability_ckpt = "ckpts/trav_head.ckpt"
 
     model = RADIODownstreamInference(
         frontier_ckpt=frontier_ckpt,
