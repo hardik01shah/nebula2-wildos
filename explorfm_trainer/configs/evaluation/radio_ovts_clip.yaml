@@ -28,8 +28,8 @@ logger:
     name: eval_rugd_radio_ovts_clip
 
 paths:
-  root_dir: /cluster/home/hashah/scratch/torch_trainer
-  data_dir: /cluster/home/hashah/scratch/data
+  root_dir: /cluster/home/$USER/scratch/explorfm_trainer
+  data_dir: /cluster/home/$USER/scratch/data
 
 
 data:

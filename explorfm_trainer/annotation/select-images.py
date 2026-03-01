@@ -7,7 +7,7 @@ from collections import defaultdict
 import numpy as np
 
 # ---- Configuration ----
-ROOT_DIR = '/home/huntsman/data'
+ROOT_DIR = '/home/$USER/data'
 SRC_DIR = os.path.join(ROOT_DIR, 'grand_tour_data')
 DEST_DIR = os.path.join(ROOT_DIR, 'grand_tour_selected', 'RGB_frames')
 METADATA_FILE = os.path.join(DEST_DIR, 'metadata.json')

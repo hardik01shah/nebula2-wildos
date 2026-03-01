@@ -61,7 +61,7 @@ class RADIO_Segmentation:
         print(f"model size: {size_model} / bit | {size_model / 8e6:.2f} / MB")
 
         # data
-        self.rugd_data_path = "/home/scarecrow/data/RUGD_sample-data/"
+        self.rugd_data_path = "/home/$USER/data/RUGD_sample-data/"
         self.rugd_loader = RUGD_Loader(self.rugd_data_path)
         self.seg_colormap = self.rugd_loader.load_annotations()
 

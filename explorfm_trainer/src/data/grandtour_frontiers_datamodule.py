@@ -315,7 +315,7 @@ class GrandTourFrontiersDataModule(LightningDataModule):
 
 if __name__ == "__main__":
     module = GrandTourFrontiersDataModule(
-        data_dir="/cluster/home/hashah/scratch/data/grand_tour_selected",
+        data_dir="/cluster/home/$USER/scratch/data/grand_tour_selected",
         gt_type="BBOX",     # or "BBOX"
         boundary_dilation=10,
         labels=['frontier'],

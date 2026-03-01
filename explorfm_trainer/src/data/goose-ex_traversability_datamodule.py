@@ -394,7 +394,7 @@ class GooseExTraversabilityDataModule(LightningDataModule):
 
 if __name__ == "__main__":
     module = GooseExTraversabilityDataModule(
-        data_dir="/home/scarecrow/data/goose-ex",
+        data_dir="/home/$USER/data/goose-ex",
         resize_factor=None,
         resize_size=(768, 768),
         crop=True,

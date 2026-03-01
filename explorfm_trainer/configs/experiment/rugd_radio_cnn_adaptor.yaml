@@ -38,8 +38,8 @@ logger:
     name: train_rugd_radio_cnn_naclip_dino_v2-lr1e-4
 
 paths:
-  root_dir: /cluster/home/hashah/scratch/torch_trainer
-  data_dir: /cluster/home/hashah/scratch/data
+  root_dir: /cluster/home/$USER/scratch/explorfm_trainer
+  data_dir: /cluster/home/$USER/scratch/data
 
 trainer:
   max_epochs: 10

@@ -202,7 +202,7 @@ if __name__ == '__main__':
     parser.add_argument('--view', action='store_true', help="View mode (no editing)")
     args = parser.parse_args()
     annotator = FrontierAnnotator(
-        root_dir='/home/scarecrow/data/grand_tour_selected',
+        root_dir='/home/$USER/data/grand_tour_selected',
         resume_index=args.resume_index,
         view=args.view
     )

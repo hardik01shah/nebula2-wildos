@@ -322,7 +322,7 @@ class RUGDTraversabilityDataModule(LightningDataModule):
 
 if __name__ == "__main__":
     module = RUGDTraversabilityDataModule(
-        data_dir="/home/scarecrow/data/RUGD",
+        data_dir="/home/$USER/data/RUGD",
         batch_size=4,
         num_workers=4,
         pin_memory=True,

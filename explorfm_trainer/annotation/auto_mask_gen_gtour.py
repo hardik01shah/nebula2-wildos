@@ -74,7 +74,7 @@ class AutoMaskGenerator:
         self.loader = GrandTour_Loader(data_path)
 
         sam2_checkpoint = "checkpoints/sam2.1_hiera_large.pt"
-        model_cfg = "//cluster/home/hashah/sam2/sam2/configs/sam2.1/sam2.1_hiera_l.yaml"
+        model_cfg = "//cluster/home/$USER/sam2/sam2/configs/sam2.1/sam2.1_hiera_l.yaml"
 
         sam2 = build_sam2(model_cfg, sam2_checkpoint, device=device, apply_postprocessing=False)
 
@@ -156,7 +156,7 @@ class AutoMaskGenerator:
         print("All masks generated.")
 
 if __name__ == "__main__":
-    data_path = "/cluster/home/hashah/scratch/data/grand_tour_selected"
+    data_path = "/cluster/home/$USER/scratch/data/grand_tour_selected"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     mask_generator = AutoMaskGenerator(data_path, device, thickness=6, viz=True)
     mask_generator.generate_masks()

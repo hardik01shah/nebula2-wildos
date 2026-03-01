@@ -32,7 +32,7 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='scarecrow',
+    maintainer='$USER',
     maintainer_email='hardikns@jpl.nasa.gov',
     description='Run VLMs on the robot camera feed.',
     license='Apache-2.0',

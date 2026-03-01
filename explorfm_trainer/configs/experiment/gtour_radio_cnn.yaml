@@ -39,8 +39,8 @@ logger:
     name: train_gtour_radio_cnn_naclip-SAM_BOUNDARY-frontierOnly
 
 paths:
-  root_dir: /cluster/home/hashah/scratch/torch_trainer
-  data_dir: /cluster/home/hashah/scratch/data
+  root_dir: /cluster/home/$USER/scratch/explorfm_trainer
+  data_dir: /cluster/home/$USER/scratch/data
 
 trainer:
   max_epochs: 100
@@ -61,4 +61,3 @@ data:
   num_workers: 4
   pin_memory: True
   labels: ['frontier']
-  # dataset_size: 10

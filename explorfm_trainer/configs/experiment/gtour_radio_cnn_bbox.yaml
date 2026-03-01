@@ -39,8 +39,8 @@ logger:
     name: train_gtour_radio_cnn_naclip-BBOX-frontierOnly
 
 paths:
-  root_dir: /cluster/home/hashah/scratch/torch_trainer
-  data_dir: /cluster/home/hashah/scratch/data
+  root_dir: /cluster/home/$USER/scratch/explorfm_trainer
+  data_dir: /cluster/home/$USER/scratch/data
 
 trainer:
   max_epochs: 100
@@ -62,4 +62,3 @@ data:
   pin_memory: True
   gt_type: BBOX
   labels: ['frontier']
-  # dataset_size: 10

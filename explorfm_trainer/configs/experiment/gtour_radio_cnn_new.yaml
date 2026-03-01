@@ -42,8 +42,8 @@ logger:
     name: train_gtour_newFrontiers-rsz0.75-aug0.5-0.2val-boxht50-poswt10.0-lr1e-4
 
 paths:
-  root_dir: /cluster/home/hashah/scratch/torch_trainer
-  data_dir: /cluster/home/hashah/scratch/data
+  root_dir: /cluster/home/$USER/scratch/explorfm_trainer
+  data_dir: /cluster/home/$USER/scratch/data
 
 trainer:
   max_epochs: 300
