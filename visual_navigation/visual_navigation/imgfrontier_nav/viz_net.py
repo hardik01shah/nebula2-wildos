@@ -1,17 +1,12 @@
 import rclpy
 from rclpy.node import Node
 
-from nav_msgs.msg import Odometry, Path as PathMsg
-from geometry_msgs.msg import PoseStamped
-from sensor_msgs.msg import CompressedImage, Image as ImageMsg, CameraInfo
-from message_filters import ApproximateTimeSynchronizer, Subscriber
-from object_search_msgs.msg import ObjectMaskWithTf
+from sensor_msgs.msg import CompressedImage, Image as ImageMsg
 from cv_bridge import CvBridge
 
 from pathlib import Path
 from omegaconf import OmegaConf
 import numpy as np
-from scipy.spatial.transform import Rotation as R
 import torch
 from torchvision import transforms
 
@@ -19,13 +14,11 @@ import os
 import cv2
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-import matplotlib
 from matplotlib.gridspec import GridSpec
 
 from visual_navigation.third_party.nvidia_radio.radio_downstream import RADIODownstreamInference
-from visual_navigation.utils.viz import (
-    make_subplot_grid, overlay_heatmap, draw_point, draw_text, draw_path, make_colorbar, pad_image
-)
+from visual_navigation.utils.viz import overlay_heatmap
+
 HOME_DIR = Path.home()
 CAMERA_MAPPING = {
     0: "front",
@@ -46,31 +39,15 @@ class VizModelPred(Node):
         "static_scale_factor": 0.75,
         "model_precision": "FP16",
 
-        # Nav Params
-        "num_cameras": 1,
         "cams_inverted": True,
-        # "cams_inverted": False,
 
-        # Pixel Scoring Params
+        # Heatmap Viz Params
         "frontier_threshold": 0.6,
         "traversability_threshold": 0.9,
         "frontier_opening_kernel_size": 20,
 
         # ROS2 frames and topics
-        "parent_frame": "spot1/odom",
-        "cam_frame": "spot1/realsense/{}_color_optical_frame",
         "camera_img_topic": "/spot1/realsense/{}/color/image_raw",
-        # "camera_img_topic": "/ghost1/realsense/{}/color/image_raw",
-        "camera_depth_topic": "/spot1/realsense/{}/aligned_depth_to_color/image_raw",
-        "camera_info_topic": "/spot1/realsense/{}/color/camera_info",
-
-        # Publish topic names
-        "model_viz_topic": "/spot1/model_visualization",
-
-        # ROS2 subscriber params
-        "qos_history_depth": 1,
-        "syncsub_queue_size": 2,
-        "syncsub_slop": 0.2,
     }
 
     def __init__(self, config: OmegaConf=OmegaConf.create()):
@@ -87,9 +64,7 @@ class VizModelPred(Node):
         self.br = CvBridge()
 
         # Nav parameters and initializations
-        self.num_cameras = config.num_cameras
         self.cam_inverted = config.cams_inverted
-        assert self.num_cameras in [1, 3], "Only 1 or 3 cameras are supported."
 
         # Initialize pixel scoring params
         self.frontier_threshold = config.frontier_threshold
@@ -99,11 +74,9 @@ class VizModelPred(Node):
         self.clbk_cntr = 0
 
         # Frames and Topic Names
-        self.global_frame = config.parent_frame
-        self.cam_tf_frame = config.cam_frame
         self.using_compressed_imgs = "compressed" in config.camera_img_topic
 
-        #Viz
+        # Viz
         self.fig_size = (10, 8)        # size of matplotlib figure
         self.main_fig = plt.figure(figsize=self.fig_size)
         gs = GridSpec(1, 4, figure=self.main_fig, width_ratios=[1]*3 + [0.05])
@@ -123,7 +96,6 @@ class VizModelPred(Node):
         self.main_fig.tight_layout()
 
         # Subscribers and Publishers
-        self.init_publishers(config)
         self.init_subscribers(config)
 
         os.makedirs("viz_outputs", exist_ok=True)
@@ -151,13 +123,6 @@ class VizModelPred(Node):
         self.transforms = transforms.Compose([
             transforms.ToTensor(),
         ])
-        
-    def init_publishers(self, config: OmegaConf):
-        self.model_viz_pub = self.create_publisher(
-            ImageMsg,
-            "/spot1/object_mask",
-            10
-        )
 
     def init_subscribers(self, config):
 
@@ -201,7 +166,6 @@ class VizModelPred(Node):
         h, w = batch_img_frontiers.shape[2:4]
 
         fin_viz_img = None
-        fig, axes = plt.subplots(1, self.num_cameras, figsize=(10,2))
 
         img_frontiers = batch_img_frontiers[0, 0, :, :]
         traversability = batch_img_traversability[0, 0, :, :]
@@ -225,7 +189,6 @@ class VizModelPred(Node):
         valid_mask_3d = np.stack([valid_frontier] * 3, axis=-1)
         frontier_overlay[valid_mask_3d] = frontier_hm[valid_mask_3d]
         cv2.imwrite(f"viz_outputs/frontiers/frontier_{self.clbk_cntr:03d}.png", frontier_overlay[:,:,::-1])
-
 
         img_trav_conf = traversability.copy()
         img_trav_conf[img_trav_conf < self.traversability_threshold] = 0.0
@@ -260,11 +223,6 @@ class VizModelPred(Node):
         cv2.waitKey(1)
         cv2.imwrite(f"viz_outputs/imgs/rgb_{self.clbk_cntr:03d}.png", rgb_img[:,:,::-1])
 
-        # self.model_viz_pub.publish(
-        #     self.br.cv2_to_imgmsg(
-        #         fin_viz_img, encoding="rgb8"
-        #     )
-        # )
         print(f"Finished Heavy")
 
 
