@@ -28,11 +28,11 @@ def generate_launch_description():
         # Always launch lrn
         Node(
             package='visual_navigation',
-            executable='radio_triangulate',
-            name='radio_triangulator',
+            executable='explorfm_triangulate',
+            name='explorfm_triangulator',
             output='screen',
             arguments=[
-                '--config', 'radio_triangulator_conf.yaml',
+                '--config', 'explorfm_triangulator_conf.yaml',
                 '--ros-args', '--log-level', log_level
             ],
             parameters=[

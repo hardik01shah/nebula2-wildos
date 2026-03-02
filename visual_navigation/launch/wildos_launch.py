@@ -33,13 +33,13 @@ def generate_launch_description():
             description='Logging level (DEBUG, INFO, WARN, ERROR, FATAL)'
         ),
 
-        # Always launch goalagnostic_scoring
+        # Always launch wildos
         Node(
             package='visual_navigation',
-            executable='goalagnostic_scoring',
+            executable='wildos',
             output='screen',
             arguments=[
-                '--config', 'goalagnostic_geofrontier_nav_conf.yaml',
+                '--config', 'wildos_nav_conf.yaml',
                 '--do_object_search', do_object_search,
                 '--ros-args', '--log-level', log_level
             ],

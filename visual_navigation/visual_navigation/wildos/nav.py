@@ -16,9 +16,9 @@ import torch
 from torchvision import transforms
 
 from visual_navigation.utils.tf_lookup_sub import TFEdge, TFLookupSubscriber
-from visual_navigation.goalagnostic_geofrontier_nav.goalagnostic_scoring import GoalAgnosticScoring
+from visual_navigation.wildos.goalagnostic_scoring import GoalAgnosticScoring
 from visual_navigation.geofrontier_nav.geofrontier_to_image import GeoFrontierToImage
-from visual_navigation.goalagnostic_geofrontier_nav.viz import VisualizeGoalAgnosticGeoFrontierScoring
+from visual_navigation.wildos.viz import VisualizeGoalAgnosticGeoFrontierScoring
 from explorfm import ExploRFMInference
 from visual_navigation.utils.object_search_utils import localize_query, get_objectmask_msg
 
@@ -29,7 +29,7 @@ CAMERA_MAPPING = {
     2: "right"
 }    
 
-class GoalAgnosticGeoFrontierNav(TFLookupSubscriber):
+class WildOS_Nav(TFLookupSubscriber):
     default_config = {
         # Model Params
         "frontier_ckpt": "frontier_head.ckpt",
@@ -121,7 +121,7 @@ class GoalAgnosticGeoFrontierNav(TFLookupSubscriber):
         self.init_model(config, do_object_search)
 
         super().__init__(
-            node_name='goalagnostic_geofrontier_nav',
+            node_name='wildos',
             config=config.tf_lookup_config
         )
         self.get_logger().info('Finished initializing models!')
@@ -627,7 +627,7 @@ def main(args=None):
     package_share_directory = Path(get_package_share_directory('visual_navigation'))
     conf = package_share_directory / "configs" / conf_name
 
-    ros2_node = GoalAgnosticGeoFrontierNav(OmegaConf.load(conf), do_object_search=custom_args.do_object_search)
+    ros2_node = WildOS_Nav(OmegaConf.load(conf), do_object_search=custom_args.do_object_search)
     rclpy.spin(ros2_node)
 
     ros2_node.destroy_node()

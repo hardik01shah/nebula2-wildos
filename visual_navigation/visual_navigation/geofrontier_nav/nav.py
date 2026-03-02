@@ -368,11 +368,11 @@ def main(args=None):
     package_share_directory = Path(get_package_share_directory('visual_navigation'))
     conf = package_share_directory / "configs" / "geofrontier_nav_conf.yaml"
 
-    # imgfrontiernav_node = GeoFrontierNav(OmegaConf.load(conf))
-    imgfrontiernav_node = GeoFrontierNav()
-    rclpy.spin(imgfrontiernav_node)
+    geofrontiernav_node = GeoFrontierNav(OmegaConf.load(conf))
+    # geofrontiernav_node = GeoFrontierNav()
+    rclpy.spin(geofrontiernav_node)
 
-    imgfrontiernav_node.destroy_node()
+    geofrontiernav_node.destroy_node()
     rclpy.shutdown()
 
 

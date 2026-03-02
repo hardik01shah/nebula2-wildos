@@ -23,7 +23,7 @@ from torchvision import transforms
 from visual_navigation.utils.tf_lookup_sub import TFEdge, TFLookupSubscriber
 from visual_navigation.utils.object_search_utils import localize_query
 from explorfm import ExploRFMInference
-from visual_navigation.radio_triangulation.triangulator_viz import TriangulationViz
+from visual_navigation.explorfm_triangulation.triangulator_viz import TriangulationViz
 
 from triangulation3d.camera_data import Camera
 from triangulation3d.particle_generator import ParticleGenerator
@@ -53,7 +53,7 @@ RobotCameraInfo = {
 }
 
 
-class RadioTriangulator(TFLookupSubscriber):
+class ExploRFMTriangulator(TFLookupSubscriber):
     default_config = {
         # Model Params
         "model_version": "c-radio_v3-b",
@@ -130,7 +130,7 @@ class RadioTriangulator(TFLookupSubscriber):
         self.init_model(config)
 
         super().__init__(
-            node_name='radio_triangulator',
+            node_name='explorfm_triangulator',
             config=config.tf_lookup_config
         )
         self.get_logger().info(f"Model filepath: {self.model_path}")
@@ -567,10 +567,10 @@ def main(args=None):
     package_share_directory = Path(get_package_share_directory('visual_navigation'))
     conf = package_share_directory / "configs" / conf_name
 
-    radio_triangulator_node = RadioTriangulator(OmegaConf.load(conf))
-    rclpy.spin(radio_triangulator_node)
+    explorfm_triangulator_node = ExploRFMTriangulator(OmegaConf.load(conf))
+    rclpy.spin(explorfm_triangulator_node)
 
-    radio_triangulator_node.destroy_node()
+    explorfm_triangulator_node.destroy_node()
     rclpy.shutdown()
 
 

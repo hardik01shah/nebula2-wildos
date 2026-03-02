@@ -3,7 +3,7 @@
 <package format="3">
   <name>visual_navigation</name>
   <version>0.0.0</version>
-  <description>Run VLMs on the robot camera feed.</description>
+  <description>Long-range visual navigation and object search.</description>
   <maintainer email="hardikns@jpl.nasa.gov">Hardik Shah</maintainer>
   <license>Apache-2.0</license>
 
